@@ -46,10 +46,13 @@ url = "https://www.curseforge.com/minecraft/mc-mods/dank-null/files/all/?filter-
 
 # get request to target the site selenium is active on
 driver.get(url)
-
+# grab all <a href blah blah> tags
 elements = driver.find_elements_by_tag_name("a")
 for element in elements:
+    # get the actual URL pointed to by the link
     href = element.get_attribute("href")
+    # This prefix works for this mod specifically, but I'm guessing the pattern is fairly predictable.
+    # Where the link exists, adding /file to the end of it bypasses the "wait for download" screen.
     if href and href.startswith("https://www.curseforge.com/minecraft/mc-mods/dank-null/download/"):
         print("getting ", href)
         driver.get(f"{href}/file")
